@@ -22,5 +22,9 @@
         {% else %}
             <p>No tasks are available</p>
         {% endif %}
+
+        <form action="{% url 'core:create' %}" method="get">
+            <button type="submit">Create New Todo Item</button>
+        </form>
 </body>
 </html>

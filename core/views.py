@@ -6,8 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import TodoItem
-
-from .models import TodoItem
+from .forms import TodoItemForm
 
 # Create your views here.
 from django.http import HttpResponse
@@ -56,9 +55,9 @@ class DetailView(generic.DetailView):
         return context
 class CreateView(generic.CreateView):
     model = TodoItem
-    template_name = "todos/create.html"
-    fields = ['title', 'description', 'due_date', 'is_completed']
-    success_url = 'list'
+    form_class = TodoItemForm
+    template_name = 'todos/create.html'
+    success_url = reverse_lazy('core:index')
 
     def form_valid(self, form):
         """
