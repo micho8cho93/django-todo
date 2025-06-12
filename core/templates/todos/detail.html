@@ -12,5 +12,16 @@
     <p><strong>Created At:</strong> {{ todo_item.created_at }}</p>
     <p><strong>Finished:</strong> {{ todo_item.is_completed }}</p>
     <p><strong>Days Open:</strong> {{ todo_item.days_open }}</p>
+    # add button to go to update page for this todo item
+    <form action="{% url 'core:update' todo_item.pk %}" method="get">
+        <button type="submit">Update Todo Item</button>
+    </form>
+    <form action="{% url 'core:delete' todo_item.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" style="color:red; border:none; background:none; cursor:pointer;">&#10006; Delete</button>
+    </form>
+    <form action="{% url 'core:index' %}" method="get">
+        <button type="submit">Back to Todo List</button>
+    </form>
 </body>
 </html>
