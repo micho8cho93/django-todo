@@ -13,6 +13,10 @@
             {% for item in todo_list %}
             <li>
                 <a href="{% url 'core:detail' item.pk %}"><strong>{{ item.title }}</strong></a> - Due: {{ item.due_date }} - Finished: {{ item.is_completed }}
+                <form action="{% url 'core:delete' item.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="color:red; border:none; background:none; cursor:pointer;">&#10006;</button>
+                </form>
             </li>
             {% endfor %}
         {% else %}

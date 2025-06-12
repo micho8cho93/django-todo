@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
+from django.views.generic import DeleteView
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -77,3 +78,7 @@ class UpdateView(generic.UpdateView):
         """
         form.instance.created_at = timezone.now()
         return super().form_valid(form)
+
+class DeleteView(DeleteView):
+    model = TodoItem
+    success_url = reverse_lazy('core:index')
