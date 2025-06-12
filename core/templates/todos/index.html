@@ -4,27 +4,47 @@
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
     <title>Todo List App</title>
 </head>
-<body>
-    <h1>Tasks</h1>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8">
+    <div class="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-700">Tasks</h1>
         {% if todo_list %}
-        <ul>
+        <ul class="space-y-4">
             {% for item in todo_list %}
-            <li>
-                <a href="{% url 'core:detail' item.pk %}"><strong>{{ item.title }}</strong></a> - Due: {{ item.due_date }} - Finished: {{ item.is_completed }}
-                <form action="{% url 'core:delete' item.pk %}" method="post" style="display:inline;">
+            <li class="flex items-center justify-between bg-gray-50 rounded-md p-4 shadow hover:bg-blue-50 transition">
+                <div>
+                    <a href="{% url 'core:detail' item.pk %}" class="text-lg font-semibold text-blue-600 hover:underline">
+                        {{ item.title }}
+                    </a>
+                    <div class="text-sm text-gray-500 mt-1">
+                        Due: <span class="font-medium">{{ item.due_date|date:"Y-m-d H:i" }}</span>
+                        &nbsp;|&nbsp;
+                        Finished: 
+                        <span class="{% if item.is_completed %}text-green-600{% else %}text-red-600{% endif %} font-semibold">
+                            {{ item.is_completed|yesno:"Yes,No" }}
+                        </span>
+                    </div>
+                </div>
+                <form action="{% url 'core:delete' item.pk %}" method="post" class="ml-4">
                     {% csrf_token %}
-                    <button type="submit" style="color:red; border:none; background:none; cursor:pointer;">&#10006;</button>
+                    <button type="submit" class="text-red-500 hover:text-white hover:bg-red-500 rounded-full p-2 transition" title="Delete">
+                        &#10006;
+                    </button>
                 </form>
             </li>
             {% endfor %}
+        </ul>
         {% else %}
-            <p>No tasks are available</p>
+            <p class="text-center text-gray-500">No tasks are available</p>
         {% endif %}
 
-        <form action="{% url 'core:create' %}" method="get">
-            <button type="submit">Create New Todo Item</button>
+        <form action="{% url 'core:create' %}" method="get" class="mt-8 flex justify-center">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 transition font-semibold">
+                Create New Todo Item
+            </button>
         </form>
+    </div>
 </body>
 </html>
