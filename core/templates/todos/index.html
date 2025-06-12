@@ -11,9 +11,10 @@
         {% if todo_list %}
         <ul>
             {% for item in todo_list %}
-            <li>{{ item }}</li>
+            <li>
+                <a href="{% url 'core:detail' item.pk %}"><strong>{{ item.title }}</strong></a> - Due: {{ item.due_date }} - Finished: {{ item.is_completed }}
+            </li>
             {% endfor %}
-        </ul>
         {% else %}
             <p>No tasks are available</p>
         {% endif %}
